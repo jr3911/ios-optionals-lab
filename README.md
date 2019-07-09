@@ -15,12 +15,45 @@ Write 3 different ways of safely unwrapping and printing the value of `userName`
 
 - Method three: Nil coalescing
 
+```swift
+var userName: String?
+
+// Method One: Check for nil and force unwrap
+if userName == nil {
+    print("No name")
+} else {
+    print(userName!)
+}
+
+// Method Two: Optional binding
+if let boundUserName = userName {
+    print(boundUserName)
+} else {
+    print("No name")
+}
+
+// Method Three: Nil coalescing
+let possibleUserName = userName ?? "Username"
+print(possibleUserName)
+```
+
 
 ## Question 2
 
 Given optional string `backgroundColor`, write code that safely unwraps and prints it. If backgroundColor is nil, give it a value.
 
 `var backgroundColor: String?`
+
+```swift
+var backgroundColor: String?
+
+if let backgroundColor = backgroundColor {
+    print(backgroundColor)
+} else {
+    backgroundColor = "Blue"
+    print(backgroundColor)
+}
+```
 
 
 ## Question 3
@@ -30,6 +63,16 @@ Given an optional width and an optional height of a rectangle, write code that c
 ```swift
 var width: Double?
 var height: Double?
+
+if let width = width {
+    if let height = height {
+        print(width * height)
+    } else {
+        print("Error: height is missing")
+    }
+} else {
+    print("Error: width is missing")
+}
 ```
 
 
@@ -41,6 +84,12 @@ Given the following optional variables `name`, `age` and `height`. Write code so
 var name: String?
 var age: Int?
 var height: Double?
+
+if let name = name, let age = age, let height = height {
+    print("Name: \(name), Age: \(age), Height: \(height)")
+} else {
+    print("Error: not all fields are filled")
+}
 ```
 
 
@@ -52,6 +101,16 @@ Given the variables `firstName`, `middleName` and `lastName`. Create a variable 
 var firstName: String = "Johnny"
 var middleName: String?
 var lastName: String = "Stone"
+var fullName = ""
+
+if let middleName = middleName {
+    fullName = firstName + " " + middleName + " " + lastName
+} else {
+    fullName = firstName + " " + lastName
+}
+
+print(fullName)
+
 ```
 
 
@@ -61,6 +120,13 @@ Write code that adds 15 to `myIntString`, then prints the sum. Use the `Int()` c
 
 `let myIntString = "35"`
 
+```swift
+let myIntString = "35"
+
+var sum = Int(myIntString)! + 15
+
+print(sum)
+```
 
 ## Question 7
 
@@ -69,9 +135,33 @@ Given an optional tuple of optional Ints, write code to safely unwrap the tuple 
 ```swift
 var scores: (Int?, Int?, Int?)?
 
-var testCaseOne = (4, nil, 7)
-var testCaseTwo = (nil, nil, 9)
-var testCaseThree = (5, 10, 24)
+var testCaseOne: (Int?, Int?, Int?)? = (4, nil, 7)
+var testCaseTwo: (Int?, Int?, Int?)? = (nil, nil, 9)
+var testCaseThree: (Int?, Int?, Int?)? = (5, 10, 24)
+
+if var testCaseOne = testCaseOne {
+    testCaseOne.0 = testCaseOne.0 ?? 0
+    testCaseOne.1 = testCaseOne.1 ?? 0
+    testCaseOne.2 = testCaseOne.2 ?? 0
+    var sum1 = testCaseOne.0! + testCaseOne.1! + testCaseOne.2!
+    print("Sum of testCaseOne: \(sum1)")
+}
+
+if var testCaseTwo = testCaseTwo {
+    testCaseTwo.0 = testCaseTwo.0 ?? 0
+    testCaseTwo.1 = testCaseTwo.1 ?? 0
+    testCaseTwo.2 = testCaseTwo.2 ?? 0
+    var sum2 = testCaseTwo.0! + testCaseTwo.1! + testCaseTwo.2!
+    print("Sum of testCaseTwo: \(sum2)")
+}
+
+if var testCaseThree = testCaseThree {
+    testCaseThree.0 = testCaseThree.0 ?? 0
+    testCaseThree.1 = testCaseThree.1 ?? 0
+    testCaseThree.2 = testCaseThree.2 ?? 0
+    var sum3 = testCaseThree.0! + testCaseThree.1! + testCaseThree.2!
+    print("Sum of testCaseThree: \(sum3)")
+}
 ```
 
 
@@ -84,6 +174,10 @@ var tuple: (Int, Int)?
 if Bool.random() {
  tuple = (5, 3)
 }
+
+if let value = tuple {
+    print(tuple)
+}
 ```
 
 
@@ -92,9 +186,16 @@ if Bool.random() {
 Write code that either doubles `myInt` and then prints it, or prints an error message if myInt is nil.
 
 ```swift
-let myInt: Int?
+var myInt: Int?
 if Bool.random() {
  myInt = 5
+}
+
+if var myInt = myInt {
+    myInt = myInt * 2
+    print(myInt)
+} else {
+    print("Error: myInt is nil")
 }
 ```
 
@@ -110,6 +211,12 @@ let doubleTwo: Double = 5
 if Bool.random() {
  myDouble = 12
 }
+
+if let myDouble = myDouble {
+    print(myDouble * doubleTwo)
+} else {
+    print("Error: myDouble is nil")
+}
 ```
 
 
@@ -123,6 +230,10 @@ var isTheGreatest: Bool?
 if Bool.random() {
  isTheGreatest = true
 }
+
+isTheGreatest = isTheGreatest ?? false
+
+print(isTheGreatest!)
 ```
 
 
@@ -140,6 +251,15 @@ if Bool.random() {
  myTuple.1 = 9
  myTuple.3 = 10
 }
+
+myTuple.0 = myTuple.0 ?? 0
+myTuple.1 = myTuple.1 ?? 0
+myTuple.2 = myTuple.2 ?? 0
+myTuple.3 = myTuple.3 ?? 0
+
+var sum = myTuple.0! + myTuple.1! + myTuple.2! + myTuple.3!
+print(sum)
+
 ```
 
 
@@ -194,6 +314,28 @@ let pokemon: String?
 var evolutionaryStone: String?
 pokemon = starterPokemon()
 evolutionaryStone = eStone()
+
+var validCombinations = [("Pikachu", "Electric"), ("Bulbasaur", "Grass"), ("Charmander", "Fire"), ("Squirtle", "Water"), ("Not a Pokemon", "No Stone")]
+
+let tryToEvolve = (pokemon, evolutionaryStone)
+var confirmation: Bool = false
+
+if let pokemon = tryToEvolve.0 {
+    if let evolutionaryStone = tryToEvolve.1 {
+        for combination in validCombinations {
+            if (tryToEvolve.0!, tryToEvolve.1!) == combination {
+                print("You applied \(evolutionaryStone) to \(pokemon). Uh-oh, something's happening!")
+                confirmation = true
+                break
+            }
+        }
+    }
+}
+
+if confirmation == false {
+    print("You tried to apply \(evolutionaryStone!) Stone to \(pokemon!)")
+    print("Oak's words echoed. There's a time and place for everything, but not now!")
+}
 ```
 
 
@@ -205,7 +347,17 @@ Given an optional int `numberOfPeople`, write code that unwraps and prints it **
 var numberOfPeople: Int?
 
 if Bool.random() {
- numberOfPeople = 108
+ numberOfPeople = 108       // can plug in any number
+}
+
+if let numberOfPeople = numberOfPeople {
+    if numberOfPeople % 2 == 0 {
+        print(numberOfPeople)
+    } else if numberOfPeople % 2 == 1 {
+        print("numberOfPeople is odd")
+    }
+} else {
+    print("numberOfPeople is nil")
 }
 ```
 
@@ -220,6 +372,15 @@ var someNumbers: [Int?] = []
 for i in 0..<20 {
     someNumbers.append(Bool.random() ? i : nil)
 }
+
+var product = 1
+for num in someNumbers {
+    if let num = num {
+        product = product * num
+    }
+}
+
+print(product)
 ```
 
 
@@ -230,7 +391,17 @@ Given the array `poorlyFormattedCityNames`, create a new array with the city nam
 ```swift
 let poorlyFormattedCityNames: [String?] = ["new york", "BOSTON", nil, "chicago", nil, "los angeles", nil, "Dallas",]
 
-Output: ["New York", "Boston", "Chicago", "Los Angeles", "Dallas"]
+var properlyFormattedCityNames: [String] = []
+
+for city in poorlyFormattedCityNames {
+    if let cityName = city {
+        properlyFormattedCityNames.append(cityName.capitalized)
+    }
+}
+
+print(properlyFormattedCityNames)
+
+// Output: ["New York", "Boston", "Chicago", "Los Angeles", "Dallas"]
 ```
 
 
@@ -244,6 +415,17 @@ var aBunchOfNumbers: [Int?] = []
 for _ in 0..<20 {
  aBunchOfNumbers.append(Bool.random() ? Int(arc4random_uniform(102)) : nil)
 }
+var onlyEvensNoNils = [Int]()
+
+for num in aBunchOfNumbers {
+    if let num = num {
+        if num % 2 == 0 {
+            onlyEvensNoNils.append(num)
+        }
+    }
+}
+print(onlyEvensNoNils)
+
 ```
 
 
@@ -253,6 +435,16 @@ Given the following array of zip codes as strings, write code that turns them in
 
 `let zipCodeStrings = ["11377", "11101", "11373", "10014", "10003", "11223"]`
 
+```swift
+let zipCodeStrings = ["11377", "11101", "11373", "10014", "10003", "11223"]
+var intZipCodes = [Int]()
+
+for zip in zipCodeStrings {
+    intZipCodes.append(Int(zip)!)
+}
+print(intZipCodes)
+
+```
 
 ## Question 19
 
@@ -266,6 +458,24 @@ Some students were asked some questions about their favorite foods and colors an
 
 `let studentInfo: [(String, String?, String?)] = [("Bill", "Burgers", "Blue"), ("Rita", nil, "Red"), ("Peter", "Pizza", "Purple"), ("Sarah", "Sandwiches", nil), ("Jeff", nil, nil), ("Lucy", "Leftovers", "Lilac"), ("Mike", "Meat", "Mauve"), ("Gemma", nil, "Green")]`
 
+```swift
+let studentInfo: [(Name: String, String?, String?)] = [("Bill", "Burgers", "Blue"), ("Rita", nil, "Red"), ("Peter", "Pizza", "Purple"), ("Sarah", "Sandwiches", nil), ("Jeff", nil, nil), ("Lucy", "Leftovers", "Lilac"), ("Mike", "Meat", "Mauve"), ("Gemma", nil, "Green")]
+
+var studentsWithFavFoodColor: [(String, String, String)] = []
+
+for tuple in studentInfo {
+    if tuple.2 == nil {
+        print("\(tuple.0) does not have a favorite color")
+    }
+    if tuple.1 == nil {
+        print("\(tuple.0) does not have a favorite food")
+    }
+    if let food = tuple.1, let color = tuple.2 {
+        studentsWithFavFoodColor.append((tuple.0, tuple.1!, tuple.2!))
+    }
+}
+print(studentsWithFavFoodColor)
+```
 
 ## Question 20
 
@@ -277,6 +487,33 @@ Given an optional array of optional tuples of optional UInt8s,
 
 `let possibleColors: [(r: UInt8?, g: UInt8?, b: UInt8?)?]? = [(128, 21, 7), (0, 0, 0), nil, (nil, 25, 82), (255, 255, 255), nil, (200, 100, nil), (120, nil, 23), (0, 255, 106), (nil, nil, nil), nil, (100, 100, 200)]`
 
+```swift
+let possibleColors: [(r: UInt8?, g: UInt8?, b: UInt8?)?]? = [(128, 21, 7), (0, 0, 0), nil, (nil, 25, 82), (255, 255, 255), nil, (200, 100, nil), (120, nil, 23), (0, 255, 106), (nil, nil, nil), nil, (100, 100, 200)]
+
+var nilTracker = 0
+
+for element in possibleColors! {
+    if let tuple = element {
+        if let r = tuple.0, let g = tuple.1, let b = tuple.2 {
+            print((tuple.0!, tuple.1!, tuple.2!))
+        } else {
+            if tuple.0 == nil {
+                nilTracker += 1
+            }
+            if tuple.1 == nil {
+                nilTracker += 1
+            }
+            if tuple.2 == nil {
+                nilTracker += 1
+            }
+        }
+    } else {
+        nilTracker += 1
+    }
+}
+print("Number of nil values: \(nilTracker)")
+```
+
 
 ## Question 21
 
@@ -286,8 +523,22 @@ Consider the following nested optional. It corresponds to a number inside a box 
 
 - Optionally bind and print number.
 
-`let number: Int??? = 10`
+```swift
+let number: Int??? = 10
 
+//fully force unwrapped
+print(number!!!)
+
+//optionally bound
+if let number = number {
+    if let number = number {
+        if let number = number {
+            print(number)
+        }
+    }
+}
+
+```
 
 ## Question 22
 
@@ -297,9 +548,65 @@ Given an Array of Optional Strings, write code that concatenates all non-nil val
 
 output: `"apesmonkeyslemurs"`
 
+```swift
+let monkeyingAround = ["orangutan", "apes",nil, "monkeys", "gorillas", "lemurs", nil]
+let vowels = "aeiou"
+var countVowels = 0
+var newString = ""
+
+for word in monkeyingAround {
+    //reset vowel counter back to 0 for each iteration of word through array
+    countVowels = 0
+    //checks if the element in the array has a value, and not nil
+    if let word = word {
+        //counts how many vowels are in the word
+        for char in word {
+        if vowels.contains(char) {
+        countVowels += 1
+            }
+        }
+        //skip this word iteration if it has 3 or more vowels
+        if countVowels >= 3 {
+            continue
+        } else {
+            newString += word
+        }
+    }
+}
+print(newString)
+
+```
+
 
 ## Question 23
 
 Given the value below, print out all of the non-nil Ints it contains by accessing each of them.
 
 `var strangeStructure: ([Int]?, [[Int?]], [[Int]?], Int)? = ([1], [[2,3,4],[],[5,nil],[nil]], [nil, [6,7,8],nil,[],[9]], 10)`
+
+```swift
+var strangeStructure: ([Int]?, [[Int?]], [[Int]?], Int)? = ([1], [[2,3,4],[],[5,nil],[nil]], [nil, [6,7,8],nil,[],[9]], 10)
+
+if let strangeStructure = strangeStructure {
+    //prints fisrt array in the tuple "strangeStructure"
+    if let firstArray = strangeStructure.0 {
+        print(firstArray)
+    }
+    //prints non-nil elements in the second array
+    for element in strangeStructure.1 {
+        for subElement in element {
+            if let subElement = subElement {
+                print(subElement)
+            }
+        }
+    }
+    //prints non-nil integers/ arrays in the third array
+    for element2 in strangeStructure.2 {
+        if let subElement2 = element2 {
+            print(subElement2)
+        }
+    }
+    //prints last part of tuple because it is definitely an Int
+    print(strangeStructure.3)
+}
+```
